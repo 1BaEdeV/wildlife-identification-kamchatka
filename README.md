@@ -1,2 +1,2 @@
-# wildlife-identification-kamchatka
+# wildlife-identification-kalimantana
 Модель компьютерного зрения для классификации видов приматов острова Калимантан. Датасет собран и подготовлен из наблюдений iNaturalist, содержит 11 видов с 2000 изображений
