@@ -1,0 +1,12 @@
+stages:
+  prepare_dataset:
+    cmd: python scripts/preparing.py
+    deps:
+    - scripts/prepare.py
+    - dataset
+    params:
+    - prepare.samples_per_class
+    - prepare.source_path
+    outs:
+    - training_dataset:
+        cache: false

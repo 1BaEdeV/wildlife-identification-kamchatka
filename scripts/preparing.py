@@ -1,10 +1,13 @@
-import shutil, os, random
+import shutil, os, random, yaml
 
-N = 60
+with open('params.yaml') as f:
+    params = yaml.safe_load(f)
+
+N = params["prepare"]["samples_per_class"]
 scriptdir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(scriptdir)
 targetdir = os.path.join(parent_dir, "training_dataset")
-initialdir = r"E:\ULTIMATE_PROJECT\wildlife-identification-kamchatka\full_dataset"
+initialdir = params["prepare"]["source_path"]
 
 if not os.path.exists(targetdir):
     os.makedirs(targetdir)

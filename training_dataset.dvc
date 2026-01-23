@@ -1,6 +1,0 @@
-outs:
-- md5: ab0ea7bafdd7a010874513d4bd2f3258.dir
-  size: 136693267
-  nfiles: 1097
-  hash: md5
-  path: training_dataset
