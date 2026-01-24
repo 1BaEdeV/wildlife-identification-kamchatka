@@ -1,8 +1,14 @@
 import tensorflow as tf
 from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications import EfficientNetB0
 import os
 import yaml, json
+import shutil
+
+# ДЕБАГ: Проверка директории
+print(f"Текущая директория: {os.getcwd()}")
+print(f"Существует ли models: {os.path.exists('models')}")
 
 # Загружаем параметры
 with open('./params.yaml') as f:
@@ -13,11 +19,9 @@ EPOCHS = params['train']['epochs']
 BATCH_SIZE = params['train']['batch_size']
 DATA_DIR = "training_dataset"
 
-IMG_SIZE = (224,224)
-
 # 1. Подготовка данных
 datagen = ImageDataGenerator(
-    rescale=1./255,
+    preprocessing_function=tf.keras.applications.efficientnet.preprocess_input,
     validation_split=0.2
 )
 
@@ -37,8 +41,8 @@ val_gen = datagen.flow_from_directory(
     subset='validation'
 )
 
-# 2. Создание модели
-base_model = tf.keras.applications.ResNet50(
+# 2. Создание модели EfficientNetB0
+base_model = EfficientNetB0(
     weights='imagenet',
     include_top=False,
     input_shape=(224, 224, 3)
@@ -47,22 +51,23 @@ base_model = tf.keras.applications.ResNet50(
 # Замораживаем сначала
 base_model.trainable = False
 
+# Простая модель поверх EfficientNet
 model = tf.keras.Sequential([
     base_model,
-    tf.keras.layers.GlobalAveragePooling2D(),
-    tf.keras.layers.Dense(256, activation='relu'),
-    tf.keras.layers.Dropout(0.5),
-    tf.keras.layers.Dense(train_gen.num_classes, activation='softmax')
+    layers.GlobalAveragePooling2D(),
+    layers.Dense(256, activation='relu'),
+    layers.Dropout(0.5),
+    layers.Dense(train_gen.num_classes, activation='softmax')
 ])
 
-# 3. Компиляция и обучение
+# 3. Компиляция
 model.compile(
-    optimizer='adam',
+    optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
     loss='categorical_crossentropy',
     metrics=['accuracy']
 )
 
-print("Начало обучения...")
+# 4. Обучение
 history = model.fit(
     train_gen,
     validation_data=val_gen,
@@ -70,11 +75,26 @@ history = model.fit(
     verbose=1
 )
 
-# 4. Сохранение модели
-os.makedirs("models", exist_ok=True)
-model.save("models/monkey_classifier.h5")
+# 5. СОЗДАЕМ ПАПКУ ПЕРЕД СОХРАНЕНИЕМ
+model_dir = "models"
+if not os.path.exists(model_dir):
+    print(f"Создаем папку {model_dir}")
+    os.makedirs(model_dir)
 
-# 5. Сохранение метрик
+# Полный путь для сохранения
+model_path = os.path.join(model_dir, "monkey_classifier.h5")
+print(f"Сохраняем модель по пути: {model_path}")
+
+# Сохраняем модель
+model.save(model_path)
+
+# 6. Проверяем, что файл создан
+if os.path.exists(model_path):
+    print(f"✓ Файл создан успешно, размер: {os.path.getsize(model_path)} байт")
+else:
+    print(f"✗ Файл не создан!")
+
+# 7. Сохранение метрик
 val_acc = history.history['val_accuracy'][-1]
 val_loss = history.history['val_loss'][-1]
 
@@ -85,9 +105,11 @@ metrics = {
     "classes": train_gen.class_indices
 }
 
-with open("metrics.json", "w") as f:
+metrics_path = "metrics.json"
+with open(metrics_path, "w") as f:
     json.dump(metrics, f, indent=2)
+    print(f"✓ Метрики сохранены в {metrics_path}")
 
 print(f"\n✅ Обучение завершено!")
 print(f"📊 Точность на валидации: {val_acc:.2%}")
-print(f"📁 Модель сохранена: models/monkey_classifier.h5")
+print(f"📁 Модель сохранена: {model_path}")

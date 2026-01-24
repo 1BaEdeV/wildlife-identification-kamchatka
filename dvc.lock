@@ -23,8 +23,8 @@ stages:
     deps:
     - path: ml/classifier.py
       hash: md5
-      md5: 85fee5d3b874beaa1c00d5fb3aa0f01e
-      size: 2350
+      md5: cfe8998064e25ad11362a74e93ece152
+      size: 3316
     - path: training_dataset
       hash: md5
       md5: e57a59cdb015dd94f3e956a30ac713db.dir
@@ -39,9 +39,9 @@ stages:
     outs:
     - path: metrics.json
       hash: md5
-      md5: a96192b02218ffaf75ebb87aeacdda38
-      size: 479
+      md5: 754de45a309f4c34c71ac67f54575e91
+      size: 477
     - path: models/monkey_classifier.h5
       hash: md5
-      md5: 8c8388b7b31560031480723febf2832e
-      size: 101082288
+      md5: 108434aa5c13e60de147d5c5e7728b9d
+      size: 20649840

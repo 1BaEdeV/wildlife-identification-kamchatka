@@ -1,0 +1,18 @@
+{
+  "val_accuracy": 0.7784090638160706,
+  "val_loss": 0.5581395626068115,
+  "train_accuracy": 0.9133522510528564,
+  "classes": {
+    "Cephalopachus_bancanus": 0,
+    "Hylobates_albibarbis": 1,
+    "Hylobates_funereus": 2,
+    "Macaca_fascicularis": 3,
+    "Macaca_nemestrina": 4,
+    "Nasalis_larvatus": 5,
+    "Nycticebus_menagensis": 6,
+    "Pongo_pygmaeus": 7,
+    "Presbytis_hosei": 8,
+    "Presbytis_rubicunda": 9,
+    "Trachypithecus_cristatus": 10
+  }
+}
