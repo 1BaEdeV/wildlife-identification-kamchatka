@@ -1,10 +1,10 @@
 prepare:
-  samples_per_class: 30
+  samples_per_class: 200
   source_path: 
     E:\ULTIMATE_PROJECT\wildlife-identification-kamchatka\full_dataset
 
 train:
   model_name: resnet50
-  epochs: 15
+  epochs: 25
   batch_size: 32
   learning_rate: 0.0001

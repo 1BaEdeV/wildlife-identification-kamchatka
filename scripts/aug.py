@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 import albumentations as A
 
-INPUT_DIR = Path(r'E:\ULTIMATE_PROJECT\wildlife-identification-kamchatka\dataset\Presbytis_hosei\All_photos')
-OUTPUT_DIR = Path(r'E:\ULTIMATE_PROJECT\wildlife-identification-kamchatka\dataset\Presbytis_hosei\All_photos\augmented')
+INPUT_DIR = Path(r'E:\ULTIMATE_PROJECT\wildlife-identification-kamchatka\full_dataset\Nycticebus_menagensis\all_photos')
+OUTPUT_DIR = Path(r'E:\ULTIMATE_PROJECT\wildlife-identification-kamchatka\full_dataset\Nycticebus_menagensis\all_photos\augmented')
 NUM_AUGMENTATIONS_PER_IMAGE = 4
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".webp"}

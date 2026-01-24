@@ -1,0 +1,47 @@
+schema: '2.0'
+stages:
+  prepare_dataset:
+    cmd: python scripts/preparing.py
+    deps:
+    - path: scripts/preparing.py
+      hash: md5
+      md5: d511b198c1e2218ef5cedf3c677582fc
+      size: 1707
+    params:
+      params.yaml:
+        prepare.samples_per_class: 200
+        prepare.source_path: 
+          E:\ULTIMATE_PROJECT\wildlife-identification-kamchatka\full_dataset
+    outs:
+    - path: training_dataset
+      hash: md5
+      md5: e57a59cdb015dd94f3e956a30ac713db.dir
+      size: 106396033
+      nfiles: 880
+  train_model:
+    cmd: python ml/classifier.py
+    deps:
+    - path: ml/classifier.py
+      hash: md5
+      md5: 85fee5d3b874beaa1c00d5fb3aa0f01e
+      size: 2350
+    - path: training_dataset
+      hash: md5
+      md5: e57a59cdb015dd94f3e956a30ac713db.dir
+      size: 106396033
+      nfiles: 880
+    params:
+      params.yaml:
+        train.batch_size: 32
+        train.epochs: 25
+        train.learning_rate: 0.0001
+        train.model_name: resnet50
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: a96192b02218ffaf75ebb87aeacdda38
+      size: 479
+    - path: models/monkey_classifier.h5
+      hash: md5
+      md5: 8c8388b7b31560031480723febf2832e
+      size: 101082288

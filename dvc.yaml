@@ -1,0 +1,25 @@
+stages:
+  prepare_dataset:
+    cmd: python scripts/preparing.py 
+    deps:
+      - scripts/preparing.py  
+    params:
+      - prepare.samples_per_class
+      - prepare.source_path
+    outs:
+      - training_dataset
+
+  train_model:
+    cmd: python ml/classifier.py
+    deps:
+      - ml/classifier.py
+      - training_dataset
+    params:
+      - train.model_name
+      - train.epochs
+      - train.batch_size
+      - train.learning_rate
+    outs:
+      - models/monkey_classifier.h5
+    metrics:
+      - metrics.json

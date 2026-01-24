@@ -5,7 +5,7 @@ import os
 import yaml, json
 
 # Загружаем параметры
-with open('../params.yaml') as f:
+with open('./params.yaml') as f:
     params = yaml.safe_load(f)
 
 # Параметры
