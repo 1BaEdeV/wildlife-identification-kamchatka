@@ -3,3 +3,7 @@
 /training_dataset
 /dataset
 /metrics.json
+/db/database.db
+/db/monkey_database.db
+/db/faiss_index.bin
+/db/image_vectors.npy

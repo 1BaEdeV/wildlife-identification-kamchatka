@@ -4,7 +4,7 @@ prepare:
     E:\ULTIMATE_PROJECT\wildlife-identification-kamchatka\full_dataset
 
 train:
-  model_name: resnet50
+  model_name: efnet
   epochs: 25
   batch_size: 32
   learning_rate: 0.0001
